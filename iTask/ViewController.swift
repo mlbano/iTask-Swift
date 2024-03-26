@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         //Add new Item alert
         var textField = UITextField()
         
-        let alert = UIAlertController(title: "Add new item", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add new task", message: "", preferredStyle: .alert)
         
         let cancel = UIAlertAction(title: "Cancel", style: .default) { (cancel) in
         }
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
         
         alert.addTextField { (text) in
             textField = text
-            textField.placeholder = "Add new item"
+            textField.placeholder = "Add new task"
         }
         alert.addAction(cancel)
         alert.addAction(save)
@@ -67,5 +67,17 @@ extension ViewController : UITableViewDelegate, UITableViewDataSource {
         cell.textLabel?.text = items[indexPath.row]
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Perform the deletion from your data source here
+            
+            // Example: Assuming you have an array named items as your data source
+            items.remove(at: indexPath.row)
+            
+            // Delete the row from the table view
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 }
